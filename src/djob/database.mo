@@ -12,7 +12,7 @@ module {
     type OwnerId = Types.OwnerId;
 
     public class Directory() {
-        let hashMap = HashMap.HashMap<Nat, Job>(1000000, isEq, Principal.hash);
+        let hashMap = HashMap.HashMap<Nat, Job>(100, isEq, Principal.hash);
 
         public func createOne(id: Nat, ownerId:OwnerId, job: Job) {
             hashMap.put(id, makeJob(id, ownerId, job));
