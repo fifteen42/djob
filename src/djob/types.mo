@@ -1,30 +1,28 @@
-import Principal "mo:base/Principal";
-
 module {
-    public type UserId = Principal;
-    // a series of job attributes
+    public type OwnerId = Principal;
     public type Tag = [Text];
-    // salary limit
-    public type Salary = (Nat, Nat); 
-    
+
     public type NewJob = {
         title: Text;
         company: Text;
         location: Text;
         tag: Tag;
         description: Text;
-        salary: Text;
+        salaryFloor: Nat;
+        salaryCeiling: Nat;
         email: Text;
     };
 
     public type Job = {
-        id: UserId;
+        id: Nat;
+        ownerId: OwnerId;
         title: Text;
         company: Text;
         location: Text;
         tag: Tag;
         description: Text;
-        salary: Text;
+        salaryFloor: Nat;
+        salaryCeiling: Nat;
         email: Text;
     };
 };

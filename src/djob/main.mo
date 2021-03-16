@@ -4,15 +4,16 @@ import Principal "mo:base/Principal";
 
 actor Djob {
     var directory: Database.Directory = Database.Directory();
-
-    type NewJob = Types.NewJob;
+    
     type Job = Types.Job;
-    type UserId = Types.UserId;
+    type NewJob = Types.NewJob;
+
+    var nextId : Nat = 1;
 
     // Jobs
-
-    public shared(msg) func create(job: NewJob): async Principal {
-        directory.createOne(msg.caller, job);
+    public shared(msg) func create(newJob: NewJob): async Principal {
+        directory.createOne(nextId, msg.caller, newJob);
+        nextId += 1;
         msg.caller
     };
 
@@ -22,8 +23,8 @@ actor Djob {
         };
     };
 
-    public query func get(userId: UserId): async ?Job {
-        directory.findOne(userId)
+    public query func getAll(): async [Job] {
+        directory.show()
     };
 
     public query func search(term: Text): async [Job] {
@@ -31,5 +32,4 @@ actor Djob {
     };
 
     public shared query(msg) func getOwnId(): async UserId { msg.caller };
-
 };
