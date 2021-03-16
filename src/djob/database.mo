@@ -1,5 +1,6 @@
 import Types "./types";
 import Principal "mo:base/Principal";
+import Principal "mo:base/Hash";
 import HashMap "mo:base/HashMap";
 import Option "mo:base/Option";
 import Array "mo:base/Array";
@@ -12,7 +13,7 @@ module {
     type OwnerId = Types.OwnerId;
 
     public class Directory() {
-        let hashMap = HashMap.HashMap<Nat, Job>(100, isEq, Principal.hash);
+        let hashMap = HashMap.HashMap<Nat, Job>(1, isEq, Hash.hash);
 
         public func createOne(id: Nat, ownerId:OwnerId, job: Job) {
             hashMap.put(id, makeJob(id, ownerId, job));
