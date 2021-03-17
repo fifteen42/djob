@@ -5,7 +5,7 @@ A decentralized job infomation sharing platform based on ICP (Dfinity) with moto
 Learn from [Linkedup](https://github.com/dfinity/linkedup).
 ### install
 
-Assume the ICP enviroment is ready.
+Assume the ICP enviroment is ready. If not, read the [ICP doc](https://sdk.dfinity.org/docs/quickstart/local-quickstart.html) first.
 
 #### 1. download djob
 
