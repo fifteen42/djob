@@ -1,21 +1,22 @@
 import Types "./types";
 import Principal "mo:base/Principal";
-import Principal "mo:base/Hash";
+import Hash "mo:base/Hash";
 import HashMap "mo:base/HashMap";
 import Option "mo:base/Option";
 import Array "mo:base/Array";
 import Iter "mo:base/Iter";
-import Utils "./utils";
+import Bool "mo:base/Bool";
 
 module {
     type Job = Types.Job;
     type NewJob = Types.NewJob;
     type OwnerId = Types.OwnerId;
+    type Tag = Types.Tag;
 
     public class Directory() {
         let hashMap = HashMap.HashMap<Nat, Job>(1, isEq, Hash.hash);
 
-        public func createOne(id: Nat, ownerId:OwnerId, job: Job) {
+        public func createOne(id: Nat, ownerId:OwnerId, job: NewJob) {
             hashMap.put(id, makeJob(id, ownerId, job));
         };
 
@@ -23,10 +24,53 @@ module {
             hashMap.put(jobId, job);
         };
 
-        public func show(): [Job] {
+        public func findOne(jobId: Nat): ?Job {
+            hashMap.get(jobId)
+        };
+
+        public func deleteOne(jobId: Nat, caller: Principal) {
+            let job = hashMap.get(jobId);
+            
+            switch (job) {
+                case (?job) {
+                    if (caller == job.ownerId) {
+                        let deleted_job = {
+                            id = job.id;
+                            ownerId = job.ownerId;
+                            title = job.title;
+                            company = job.company;
+                            location = job.location;
+                            tag = job.tag;
+                            description = job.description;
+                            salaryFloor = job.salaryFloor;
+                            salaryCeiling = job.salaryCeiling;
+                            email = job.email;
+                            isDeleted = true;
+                        };
+                        hashMap.put(jobId, deleted_job);
+                    }
+                };
+                case (null) {
+                    ()
+                };
+            };
+        };
+        
+        // show all jobs include deleted jobs
+        public func showAll(): [Job] {
             var jobs: [Job] = [];
             for ((id, job) in hashMap.entries()) {
                 jobs := Array.append<Job>(jobs, [job]);
+            };
+            jobs
+        };
+
+        public func show(): [Job] {
+            var jobs: [Job] = [];
+            for ((id, job) in hashMap.entries()) {
+                if (job.isDeleted == false) {
+                    jobs := Array.append<Job>(jobs, [job]);
+                }
             };
             jobs
         };
@@ -36,7 +80,9 @@ module {
             for ((id, job) in hashMap.entries()) {
                 let all = job.title # " " # job.company # " " # job.description # " " # job.location;
                 if (includesText(all, term)) {
-                    jobs := Array.append<Job>(jobs, [job]);
+                    if (job.isDeleted == false) {
+                        jobs := Array.append<Job>(jobs, [job]);
+                    }
                 };
             };
             jobs
@@ -74,6 +120,7 @@ module {
                 salaryFloor = job.salaryFloor;
                 salaryCeiling = job.salaryCeiling;
                 email = job.email;
+                isDeleted = false;
             }
         };
         

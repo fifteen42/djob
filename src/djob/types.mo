@@ -24,5 +24,6 @@ module {
         salaryFloor: Nat;
         salaryCeiling: Nat;
         email: Text;
+        isDeleted: Bool;
     };
 };
