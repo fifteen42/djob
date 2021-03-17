@@ -7,11 +7,11 @@ Learn from [Linkedup](https://github.com/dfinity/linkedup).
 
 Assume the ICP enviroment is ready.
 
-1. download djob
+#### 1. download djob
 
 `git clone git@github.com:FUTingFei/djob.git && cd djob`
 
-2. deploy djob to local replica
+#### 2. deploy djob to local replica
 
 `dfx start --background`
 
