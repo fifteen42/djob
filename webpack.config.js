@@ -1,3 +1,4 @@
+var webpack = require('webpack');
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const dfxJson = require("./dfx.json");
@@ -42,7 +43,7 @@ function generateWebpackConfigForCanister(name, info) {
     node: {
       fs: "empty"
     },
-    devtool: "source-map",
+    devtool: "undefined",
     optimization: {
       minimize: true,
       minimizer: [new TerserPlugin()],
@@ -60,13 +61,31 @@ function generateWebpackConfigForCanister(name, info) {
     // webpack configuration. For example, if you are using React
     // modules and CSS as described in the "Adding a stylesheet"
     // tutorial, uncomment the following lines:
-    // module: {
-    //  rules: [
-    //    { test: /\.(ts|tsx|jsx)$/, loader: "ts-loader" },
-    //    { test: /\.css$/, use: ['style-loader','css-loader'] }
-    //  ]
-    // },
-    plugins: [],
+    module: {
+     rules: [
+       { test: /\.(ts|tsx|jsx)$/, loader: "ts-loader" },
+       { test: /\.(css)$/, use: ['style-loader','css-loader'] },
+       {
+        test: /\.less$/,
+        use: [
+          {
+            loader: 'style-loader', // creates style nodes from JS strings
+          },
+          {
+            loader: 'css-loader', // translates CSS into CommonJS
+          },
+          {
+            loader: 'less-loader', // compiles Less to CSS
+            options: {
+                javascriptEnabled: true
+            }
+          },
+        ],
+      },
+     ]
+    },
+    plugins: [
+    ],
   };
 }
 
