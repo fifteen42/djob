@@ -1,13 +1,21 @@
 import djob from 'ic:canisters/djob';
 import * as React from 'react';
 import { render } from 'react-dom';
-import { Table, Tag, Space } from 'antd';
 import Table from 'antd/es/table';
 import Tag from 'antd/es/tag';
+import Row from 'antd/es/row';
+import Col from 'antd/es/col';
+import Button from 'antd/es/button';
+import Input from 'antd/es/input';
 import Space from 'antd/es/space';
+import 'antd/lib/row/style';
+import 'antd/lib/col/style';
 import 'antd/lib/table/style';
 import 'antd/lib/tag/style';
+import 'antd/lib/button/style';
+import 'antd/lib/input/style';
 import 'antd/lib/space/style';
+import './index.css';
 
 
 class MyHello extends React.Component {
@@ -75,17 +83,17 @@ class MyHello extends React.Component {
             title: 'Description',
             key:'description',
             dataIndex:'description'
-        }
-        // {
-        //   title: 'Action',
-        //   key: 'action',
-        //   render: (text, record) => (
-        //     <Space size="middle">
-        //       <a>Invite {record.name}</a>
-        //       <a>Delete</a>
-        //     </Space>
-        //   ),
-        // },
+        },
+        {
+          title: 'Action',
+          key: 'action',
+          render: () => (
+            <Space size="middle">
+              <a>Update</a>
+              <a>Delete</a>
+            </Space>
+          ),
+        },
     ];
 
 
@@ -93,10 +101,44 @@ class MyHello extends React.Component {
 
     data.forEach( item => {
         item.salary = item.salaryFloor + "-" + item.salaryCeiling;
+        item.key = item.id;
     });
 
+    const onSearch = value => console.log(value);
+
+    const { Search } = Input;
+
     return (
-        <Table columns={columns} dataSource={data} />
+        <>
+            <Row>
+                <Col span={24}>
+                    <h2>
+                    Djob: A decentralized job infomation sharing platform based on ICP (Dfinity)
+                    </h2>
+                </Col>
+            </Row>
+            <Row>
+            <Col span={11}></Col>
+            <Col span={4}>
+                <Button type="primary" className='postbutton' size="large" >Post a Job</Button>
+            </Col>
+            <Col span={9}></Col>
+            </Row>
+            <Row>
+                <Col span={8}></Col>
+                <Col span={8}>
+                    <Search className="search_input" placeholder="搜索标签、地点、工作名等" allowClear onSearch={onSearch} enterButton />
+                </Col>
+                <Col span={8}></Col>
+            </Row>
+            <Row>
+                <Col span={2}></Col>
+                <Col span={20}>
+                    <Table columns={columns} dataSource={data} />
+                </Col>
+                <Col span={2}></Col>
+            </Row>
+        </> 
     );
   }
 }
