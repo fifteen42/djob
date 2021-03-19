@@ -28,27 +28,25 @@ module {
             hashMap.get(jobId)
         };
 
-        public func deleteOne(jobId: Nat, caller: Principal) {
+        public func deleteOne(jobId: Nat) {
             let job = hashMap.get(jobId);
             
             switch (job) {
                 case (?job) {
-                    if (caller == job.ownerId) {
-                        let deleted_job = {
-                            id = job.id;
-                            ownerId = job.ownerId;
-                            title = job.title;
-                            company = job.company;
-                            location = job.location;
-                            tag = job.tag;
-                            description = job.description;
-                            salaryFloor = job.salaryFloor;
-                            salaryCeiling = job.salaryCeiling;
-                            email = job.email;
-                            isDeleted = true;
-                        };
-                        hashMap.put(jobId, deleted_job);
-                    }
+                    let deleted_job = {
+                        id = job.id;
+                        ownerId = job.ownerId;
+                        title = job.title;
+                        company = job.company;
+                        location = job.location;
+                        tag = job.tag;
+                        description = job.description;
+                        salaryFloor = job.salaryFloor;
+                        salaryCeiling = job.salaryCeiling;
+                        email = job.email;
+                        isDeleted = true;
+                    };
+                    hashMap.put(jobId, deleted_job);
                 };
                 case (null) {
                     ()

@@ -21,13 +21,11 @@ actor Djob {
     };
 
     public shared(msg) func update(job: Job): async () {
-        if( msg.caller == job.ownerId ) {
-            directory.updateOne(job.id, job);
-        };
+        directory.updateOne(job.id, job);
     };
 
     public shared(msg) func delete(jobId: Nat): async () {
-        directory.deleteOne(jobId, msg.caller);
+        directory.deleteOne(jobId);
     };
 
     public query func get(jobId: Nat): async ?Job {

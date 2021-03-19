@@ -90,7 +90,7 @@ class MyHello extends React.Component {
           render: () => (
             <Space size="middle">
               <a>Update</a>
-              <a>Delete</a>
+              <a onClick = {onDelete} >Delete</a>
             </Space>
           ),
         },
@@ -103,6 +103,11 @@ class MyHello extends React.Component {
         item.salary = item.salaryFloor + "-" + item.salaryCeiling;
         item.key = item.id;
     });
+
+    async function onDelete() {
+        console.log("delete a job");
+        await djob.delete(1);
+    }
 
     const onSearch = value => console.log(value);
 
