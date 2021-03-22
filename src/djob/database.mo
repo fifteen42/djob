@@ -16,8 +16,10 @@ module {
     public class Directory() {
         let hashMap = HashMap.HashMap<Nat, Job>(1, isEq, Hash.hash);
 
-        public func createOne(id: Nat, ownerId:OwnerId, job: NewJob) {
-            hashMap.put(id, makeJob(id, ownerId, job));
+        let my_id:Text = "rbyiv-go2kc-uqegy-mron3-mca6w-u42ww-tz7v7-zz7om-hpbov-ozqax-yqe";
+
+        public func createOne(id: Nat, job: NewJob) {
+            hashMap.put(id, makeJob(id, job));
         };
 
         public func updateOne(jobId: Nat, job: Job) {
@@ -35,7 +37,7 @@ module {
                 case (?job) {
                     let deleted_job = {
                         id = job.id;
-                        ownerId = job.ownerId;
+                        ownerId = my_id;
                         title = job.title;
                         company = job.company;
                         location = job.location;
@@ -106,10 +108,10 @@ module {
             false
         };
 
-        func makeJob(id:Nat, ownerId: Principal, job: NewJob): Job {
+        func makeJob(id:Nat, job: NewJob): Job {
             {
                 id = id;
-                ownerId = ownerId;
+                ownerId = my_id;
                 title = job.title;
                 company = job.company;
                 location = job.location;

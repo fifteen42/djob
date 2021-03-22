@@ -8,6 +8,7 @@ import Col from 'antd/es/col';
 import Button from 'antd/es/button';
 import Input from 'antd/es/input';
 import Space from 'antd/es/space';
+
 import 'antd/lib/row/style';
 import 'antd/lib/col/style';
 import 'antd/lib/table/style';
@@ -15,14 +16,18 @@ import 'antd/lib/tag/style';
 import 'antd/lib/button/style';
 import 'antd/lib/input/style';
 import 'antd/lib/space/style';
-import './index.css';
+import './home.css';
+import Post from "./Post.jsx"
+import Update from "./Update.jsx"
 
 
-class MyHello extends React.Component {
+export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        jobs: []
+        jobs: [],
+        post_visible: false,
+        update_visible: false,
     };
   }
 
@@ -31,7 +36,26 @@ class MyHello extends React.Component {
       this.setState({...this.state, jobs: jobs});
   }
 
+  showUpdateDrawer = () => {
+      this.setState({
+          update_visible: true,
+      });
+  }
+
+  showPostDrawer = () => {
+      this.setState({
+          post_visible: true,
+      });
+  }
+
+  onPostClose = () => {
+      this.setState({
+          post_visible: false,
+      });
+  }
+
   render() {
+
     const columns = [
         {
           title: 'Title',
@@ -118,14 +142,14 @@ class MyHello extends React.Component {
             <Row>
                 <Col span={24}>
                     <h2>
-                    Djob: A decentralized job infomation sharing platform based on ICP (Dfinity)
+                    <a href = "https://github.com/FUTingFei/djob" >Djob</a> : A decentralized job infomation sharing platform based on ICP (Dfinity)
                     </h2>
                 </Col>
             </Row>
             <Row>
             <Col span={11}></Col>
             <Col span={4}>
-                <Button type="primary" className='postbutton' size="large" >Post a Job</Button>
+                <Button type="primary" className='postbutton' size="large" onClick={this.showPostDrawer} >Post a Job</Button>
             </Col>
             <Col span={9}></Col>
             </Row>
@@ -143,9 +167,10 @@ class MyHello extends React.Component {
                 </Col>
                 <Col span={2}></Col>
             </Row>
+            <Post post_visible = {this.state.post_visible} ></Post>
         </> 
     );
   }
 }
 
-render(<MyHello />, document.getElementById('app'));
+render(<Home />, document.getElementById('app'));
