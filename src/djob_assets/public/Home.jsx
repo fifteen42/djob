@@ -125,7 +125,8 @@ export default class Home extends React.Component {
 
     data.forEach( item => {
         item.salary = item.salaryFloor + "-" + item.salaryCeiling;
-        item.key = item.id;
+        item.key = item.id.toString();
+        console.log(item);
     });
 
     async function onDelete() {

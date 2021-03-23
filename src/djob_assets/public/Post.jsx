@@ -1,9 +1,7 @@
 import djob from 'ic:canisters/djob';
 import * as React from 'react';
-import { render } from 'react-dom';
 import Drawer from 'antd/es/drawer';
 import Form from 'antd/es/form';
-import Select from 'antd/es/select';
 import Row from 'antd/es/row';
 import Col from 'antd/es/col';
 import Button from 'antd/es/button';
@@ -20,9 +18,9 @@ import 'antd/lib/button/style';
 import 'antd/lib/input/style';
 import 'antd/lib/input-number/style';
 
-const { Option } = Select;
-
 export default class Post extends React.Component {
+    formRef = React.createRef();
+
     constructor(props) {
         super(props);
         this.state = {
@@ -36,14 +34,28 @@ export default class Post extends React.Component {
     }
 
     onClose = () => {
-        console.log(1);
         this.setState({
             post_visible: false,
         });
     }
 
+    handleOk = () => {
+        const job = this.formRef.current.getFieldValue();
+        djob.create(
+            { title:job.title, company: job.company,  location: job.location, tag: [job.tag1, job.tag2, job.tag3], description: job.description, salaryFloor: job.salaryFloor, salaryCeiling : job.salaryCeiling, email: job.email}
+        ).then(function(result) {
+            alert("Success: " + result);
+            window.location.reload();
+        }).catch(function (reason) {
+            alert("Failed: " + reason);
+        });
+        this.setState({
+            post_visible: false,
+        });
+    };
+    
     render() {
-        
+
         return (
             <>
             <Drawer
@@ -54,20 +66,20 @@ export default class Post extends React.Component {
               bodyStyle={{ paddingBottom: 80 }}
               footer={
                 <div
-                  style={{
+                style={{
                     textAlign: 'right',
-                  }}
+                }}
                 >
-                  <Button onClick={this.onClose} style={{ marginRight: 8 }}>
-                    Cancel
-                  </Button>
-                  <Button onClick={this.onClose} type="primary">
-                    Submit
-                  </Button>
+                    <Button onClick={this.onClose} style={{ marginRight: 8 }}>
+                        Cancel
+                    </Button>
+                    <Button form="myForm" key="submit" type="primary" onClick={this.handleOk}>
+                        Submit
+                    </Button>
                 </div>
-              }
+            }
             >
-            <Form layout="vertical" hideRequiredMark>
+            <Form layout="vertical" hideRequiredMark ref={this.formRef} id="myForm" >
                 <Row gutter={16}>
                   <Col span={12}>
                     <Form.Item
@@ -141,8 +153,8 @@ export default class Post extends React.Component {
                 <Row gutter={16}>
                   <Col span={12}>
                     <Form.Item
-                      name="Email"
-                      label="email"
+                      name="email"
+                      label="Email"
                       rules={[{ required: true, }]}
                     >
                       <Input
@@ -158,7 +170,6 @@ export default class Post extends React.Component {
                     >
                       <InputNumber
                          style={{ width: '100%' }}
-                         defaultValue={1000}
                       />
                     </Form.Item>
                   </Col>
@@ -170,7 +181,6 @@ export default class Post extends React.Component {
                     >
                       <InputNumber
                          style={{ width: '100%' }}
-                         defaultValue={10000}
                       />
                     </Form.Item>
                   </Col>
