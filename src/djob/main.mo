@@ -9,25 +9,24 @@ actor Djob {
     type Job = Types.Job;
     type NewJob = Types.NewJob;
     type OwnerId = Types.OwnerId;
+    let my_id:Text = "rbyiv-go2kc-uqegy-mron3-mca6w-u42ww-tz7v7-zz7om-hpbov-ozqax-yqe";
+
 
     var nextId : Nat = 1;
 
     public shared(msg) func create(newJob: NewJob): async Text {
-        directory.createOne(nextId, msg.caller, newJob);
+        directory.createOne(nextId, newJob);
         nextId += 1;
-        let text_p = Principal.toText(msg.caller);
         let s_id = Nat.toText(nextId - 1);
-        return "The Owner { " # text_p # " } crate a job with id : " # s_id;
+        return "You crate a job with id : " # s_id;
     };
 
     public shared(msg) func update(job: Job): async () {
-        if( msg.caller == job.ownerId ) {
-            directory.updateOne(job.id, job);
-        };
+        directory.updateOne(job.id, job);
     };
 
     public shared(msg) func delete(jobId: Nat): async () {
-        directory.deleteOne(jobId, msg.caller);
+        directory.deleteOne(jobId);
     };
 
     public query func get(jobId: Nat): async ?Job {
@@ -46,5 +45,5 @@ actor Djob {
         directory.findBy(term)
     };
 
-    public shared query(msg) func getOwnId(): async OwnerId { msg.caller };
+    public shared query(msg) func getOwnId(): async OwnerId { my_id };
 };

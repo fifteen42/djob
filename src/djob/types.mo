@@ -1,5 +1,5 @@
 module {
-    public type OwnerId = Principal;
+    public type OwnerId = Text;
     public type Tag = [Text];
 
     public type NewJob = {

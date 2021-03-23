@@ -9,7 +9,7 @@
         "djob"
       ],
       "frontend": {
-        "entrypoint": "src/djob_assets/public/index.jsx"
+        "entrypoint": "src/djob_assets/public/Home.jsx"
       },
       "source": [
         "src/djob_assets/assets",

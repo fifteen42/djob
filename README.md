@@ -214,3 +214,6 @@ dfx canister call djob search "rust"
   - [x] CURD
   - [ ] payment related things with cycles
 - [ ] frontend
+  - [x] basic pages
+  - [ ] CURD from frontend
+  - [ ] access control 
