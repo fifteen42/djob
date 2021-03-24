@@ -1,6 +1,6 @@
 ## djob
 
-A decentralized job infomation sharing platform based on ICP (Dfinity) with motoko as backend and react as frontend.
+A decentralized job infomation platform based on ICP (Dfinity).  with motoko as backend and react as frontend.
 
 Learn from [Linkedup](https://github.com/dfinity/linkedup).
 ### install
