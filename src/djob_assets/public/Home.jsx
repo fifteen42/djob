@@ -18,7 +18,7 @@ import 'antd/lib/input/style';
 import 'antd/lib/space/style';
 import './home.css';
 import Post from "./Post.jsx"
-import Update from "./Update.jsx"
+// import Update from "./Update.jsx"
 
 
 export default class Home extends React.Component {
@@ -27,7 +27,7 @@ export default class Home extends React.Component {
     this.state = {
         jobs: [],
         post_visible: false,
-        update_visible: false,
+        // update_visible: false,
     };
   }
 
@@ -36,11 +36,12 @@ export default class Home extends React.Component {
       this.setState({...this.state, jobs: jobs});
   }
 
-  showUpdateDrawer = () => {
-      this.setState({
-          update_visible: true,
-      });
-  }
+  // showUpdateDrawer = () => {
+  //     console.log("udpate");
+  //     this.setState({
+  //         update_visible: true,
+  //     });
+  // }
 
   showPostDrawer = () => {
       this.setState({
@@ -48,10 +49,11 @@ export default class Home extends React.Component {
       });
   }
 
-  onPostClose = () => {
-      this.setState({
-          post_visible: false,
-      });
+  async onSearch(value, event) {
+    const search_res = await djob.search(value);
+    this.setState({
+        jobs: search_res
+    });
   }
 
   render() {
@@ -108,16 +110,16 @@ export default class Home extends React.Component {
             key:'description',
             dataIndex:'description'
         },
-        {
-          title: 'Action',
-          key: 'action',
-          render: (row) => (
-            <Space size="middle">
-              <a onClick = {() => {onUpdate(row.key)}} >Update</a>
-              <a onClick = {() => {onDelete(row.key)}} >Delete</a>
-            </Space>
-          ),
-        },
+        // {
+        //   title: 'Action',
+        //   key: 'action',
+        //   render: (row) => (
+        //     <Space size="middle">
+        //       <a onClick = {this.showUpdateDrawer} >Update</a>
+        //       <a onClick = {() => {onDelete(row.key)}} >Delete</a>
+        //     </Space>
+        //   ),
+        // },
     ];
 
 
@@ -147,12 +149,9 @@ export default class Home extends React.Component {
         window.location.reload();
     }
 
-    // update
-    async function onUpdate(id) {
-        await djob.delete(parseInt(id));
+    function refresh() {
+      window.location.reload();
     }
-
-    const onSearch = value => console.log(value);
 
     const { Search } = Input;
 
@@ -161,7 +160,7 @@ export default class Home extends React.Component {
             <Row>
                 <Col span={24}>
                     <h2>
-                    <a href = "https://github.com/FUTingFei/djob" >Djob</a> : A decentralized job infomation sharing platform based on ICP (Dfinity)
+                      <a onClick={refresh} style={{ color: '#24a0ed' }} >Djob</a> : A decentralized job infomation platform based on ICP (Dfinity).  <a href="https://github.com/FUTingFei/djob">Repo</a>
                     </h2>
                 </Col>
             </Row>
@@ -175,7 +174,7 @@ export default class Home extends React.Component {
             <Row>
                 <Col span={8}></Col>
                 <Col span={8}>
-                    <Search className="search_input" placeholder="搜索标签、地点、工作名等" allowClear onSearch={onSearch} enterButton />
+                    <Search className="search_input" placeholder="搜索标签、地点、工作名等" allowClear onSearch={(value) => {this.onSearch(value)}} enterButton />
                 </Col>
                 <Col span={8}></Col>
             </Row>
@@ -187,6 +186,7 @@ export default class Home extends React.Component {
                 <Col span={2}></Col>
             </Row>
             <Post post_visible = {this.state.post_visible} ></Post>
+            {/* <Update update_visible = {this.state.update_visible} ></Update> */}
         </> 
     );
   }

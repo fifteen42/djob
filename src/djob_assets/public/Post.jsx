@@ -24,7 +24,7 @@ export default class Post extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            jobs: [],
+            cycles: 3,
             post_visible: false,
         };
     }
@@ -41,6 +41,7 @@ export default class Post extends React.Component {
 
     handleOk = () => {
         const job = this.formRef.current.getFieldValue();
+        // if ( this.state.cycles > 0) {
         djob.create(
             { title:job.title, company: job.company,  location: job.location, tag: [job.tag1, job.tag2, job.tag3], description: job.description, salaryFloor: job.salaryFloor, salaryCeiling : job.salaryCeiling, email: job.email}
         ).then(function(result) {
@@ -51,7 +52,12 @@ export default class Post extends React.Component {
         });
         this.setState({
             post_visible: false,
+            // cycles: this.state.cycles - 1
         });
+        // } else {
+        //   alert("Your balance is not enough to post a job. _(:з」∠)_");
+        // }
+        
     };
     
     render() {
