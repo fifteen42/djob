@@ -111,10 +111,10 @@ export default class Home extends React.Component {
         {
           title: 'Action',
           key: 'action',
-          render: () => (
+          render: (row) => (
             <Space size="middle">
-              <a>Update</a>
-              <a onClick = {onDelete} >Delete</a>
+              <a onClick = {() => {onUpdate(row.key)}} >Update</a>
+              <a onClick = {() => {onDelete(row.key)}} >Delete</a>
             </Space>
           ),
         },
@@ -126,12 +126,30 @@ export default class Home extends React.Component {
     data.forEach( item => {
         item.salary = item.salaryFloor + "-" + item.salaryCeiling;
         item.key = item.id.toString();
-        console.log(item);
     });
 
-    async function onDelete() {
-        console.log("delete a job");
-        await djob.delete(1);
+    // bad way: sort by myself
+
+    function compare(a, b) {
+      if (a.key < b.key) {
+        return -1;
+      }
+      if ( a.key > b.key ) {
+        return 1;
+      }
+      return 0;
+    }
+
+    data.sort(compare);
+
+    async function onDelete(id) {
+        await djob.delete(parseInt(id));
+        window.location.reload();
+    }
+
+    // update
+    async function onUpdate(id) {
+        await djob.delete(parseInt(id));
     }
 
     const onSearch = value => console.log(value);
@@ -164,7 +182,7 @@ export default class Home extends React.Component {
             <Row>
                 <Col span={2}></Col>
                 <Col span={20}>
-                    <Table columns={columns} dataSource={data} />
+                    <Table columns={columns} dataSource={data}/>
                 </Col>
                 <Col span={2}></Col>
             </Row>

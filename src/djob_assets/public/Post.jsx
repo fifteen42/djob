@@ -120,7 +120,7 @@ export default class Post extends React.Component {
                     <Form.Item
                       name="tag1"
                       label="Tag 1"
-                      rules={[{ required: false}]}
+                      rules={[{ required: true}]}
                     >
                      <Input
                         placeholder="Tag 1"
@@ -131,7 +131,7 @@ export default class Post extends React.Component {
                     <Form.Item
                       name="tag2"
                       label="Tag 2"
-                      rules={[{ required: false}]}
+                      rules={[{ required: true}]}
                     >
                      <Input
                         placeholder="Tag 2"
@@ -142,7 +142,7 @@ export default class Post extends React.Component {
                     <Form.Item
                       name="tag3"
                       label="Tag 3"
-                      rules={[{ required: false}]}
+                      rules={[{ required: true}]}
                     >
                      <Input
                         placeholder="Tag 3"
