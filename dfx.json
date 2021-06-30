@@ -9,7 +9,7 @@
         "djob"
       ],
       "frontend": {
-        "entrypoint": "src/djob_assets/public/Home.jsx"
+        "entrypoint": "src/djob_assets/src/index.html"
       },
       "source": [
         "src/djob_assets/assets",
@@ -23,7 +23,7 @@
       "packtool": ""
     }
   },
-  "dfx": "0.6.26",
+  "dfx": "0.7.2",
   "networks": {
     "local": {
       "bind": "127.0.0.1:8000",

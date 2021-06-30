@@ -1,4 +1,9 @@
-import djob from 'ic:canisters/djob';
+import { Actor, HttpAgent } from '@dfinity/agent';
+import { idlFactory as djob_idl, canisterId as djob_id } from 'dfx-generated/djob';
+
+const agent = new HttpAgent();
+const djob = Actor.createActor(djob_idl, { agent, canisterId: djob_id });
+
 import * as React from 'react';
 import { render } from 'react-dom';
 import Table from 'antd/es/table';
@@ -7,7 +12,6 @@ import Row from 'antd/es/row';
 import Col from 'antd/es/col';
 import Button from 'antd/es/button';
 import Input from 'antd/es/input';
-import Space from 'antd/es/space';
 
 import 'antd/lib/row/style';
 import 'antd/lib/col/style';
@@ -16,7 +20,7 @@ import 'antd/lib/tag/style';
 import 'antd/lib/button/style';
 import 'antd/lib/input/style';
 import 'antd/lib/space/style';
-import './home.css';
+import '../assets/main.css';
 import Post from "./Post.jsx"
 // import Update from "./Update.jsx"
 

@@ -1,219 +1,60 @@
-## djob
+Djob 是一个基于[互联网计算机](https://dfinity.org/)的工作信息分享平台。你可以在上面免费发布工作信息，或者付费将工作信息置顶。
 
-A decentralized job infomation platform based on ICP (Dfinity).  with motoko as backend and react as frontend.
+本项目有两个目的：
+- 连接区块链从业者与产业最前线。
+- 探索互联网计算机上的应用模式，以及登录与支付等功能。
 
-Learn from [Linkedup](https://github.com/dfinity/linkedup).
-### install
+互联网计算机（[Internet Computer](https://dfinity.org/)）是 Dfinity 基金会推出的自适应区块链，其智能合约（canister）可以承载传统 web 应用，因此也可以理解为一种去中心化的云服务平台（类比AWS、阿里云）。
 
-Assume the ICP enviroment is ready. If not, read the [ICP doc](https://sdk.dfinity.org/docs/quickstart/local-quickstart.html) first.
+### 运行
 
-#### 1. download djob
+项目后端使用 Motoko 语言开发，前端使用 React 框架开发。
 
-`git clone git@github.com:FUTingFei/djob.git && cd djob`
-
-#### 2. deploy djob to local replica
-
-`dfx start --background`
-
-`dfx deploy`
-
-### backend usage
+1. 安装 Internet Computer 本地环境
 
 ```
-
-dfx canister call djob getOwnId
-(principal "rbyiv-go2kc-uqegy-mron3-mca6w-u42ww-tz7v7-zz7om-hpbov-ozqax-yqe")
-
-dfx canister call djob create '(record { title = "rust 工程师"; company = "泰砥科技";  location = "上海"; tag = vec{"rust"; "cita"}; description = "牛逼的工作"; salaryFloor = 10000; salaryCeiling = 20000; email = "tingfei.fu@taiditech.com";})'
-(
-  "The Owner { rbyiv-go2kc-uqegy-mron3-mca6w-u42ww-tz7v7-zz7om-hpbov-ozqax-yqe } crate a job with id : 1",
-)
-
-dfx canister call djob create '(record { title = "java 工程师"; company = "SNZ";  location = "上海"; tag = vec{"java"; "spring"}; description = "牛逼的工作"; salaryFloor = 15000; salaryCeiling = 30000; email = "tingfei.fu@taiditech.com";})'
-(
-  "The Owner { rbyiv-go2kc-uqegy-mron3-mca6w-u42ww-tz7v7-zz7om-hpbov-ozqax-yqe } crate a job with id : 2",
-)
-
-dfx canister call djob create '(record { title = "python 工程师"; company = "SNZ";  location = "上海"; tag = vec{"python"; "panda"}; description = "牛逼的工作"; salaryFloor = 15000; salaryCeiling = 30000; email = "tingfei.fu@taiditech.com";})'
-(
-  "The Owner { rbyiv-go2kc-uqegy-mron3-mca6w-u42ww-tz7v7-zz7om-hpbov-ozqax-yqe } crate a job with id : 3",
-)
-
-
-dfx canister call djob getAll
-(
-  vec {
-    record {
-      id = 2;
-      tag = vec { "java"; "spring" };
-      title = "java 工程师";
-      isDeleted = false;
-      ownerId = principal "rbyiv-go2kc-uqegy-mron3-mca6w-u42ww-tz7v7-zz7om-hpbov-ozqax-yqe";
-      description = "牛逼的工作";
-      email = "tingfei.fu@taiditech.com";
-      salaryCeiling = 30_000;
-      company = "SNZ";
-      location = "上海";
-      salaryFloor = 15_000;
-    };
-    record {
-      id = 3;
-      tag = vec { "python"; "panda" };
-      title = "python 工程师";
-      isDeleted = false;
-      ownerId = principal "rbyiv-go2kc-uqegy-mron3-mca6w-u42ww-tz7v7-zz7om-hpbov-ozqax-yqe";
-      description = "牛逼的工作";
-      email = "tingfei.fu@taiditech.com";
-      salaryCeiling = 30_000;
-      company = "SNZ";
-      location = "上海";
-      salaryFloor = 15_000;
-    };
-    record {
-      id = 1;
-      tag = vec { "rust"; "cita" };
-      title = "rust 工程师";
-      isDeleted = false;
-      ownerId = principal "rbyiv-go2kc-uqegy-mron3-mca6w-u42ww-tz7v7-zz7om-hpbov-ozqax-yqe";
-      description = "牛逼的工作";
-      email = "tingfei.fu@taiditech.com";
-      salaryCeiling = 20_000;
-      company = "泰砥科技";
-      location = "上海";
-      salaryFloor = 10_000;
-    };
-  },
-)
-
-dfx canister call djob delete 2
-()
-
-dfx canister call djob getAll
-(
-  vec {
-    record {
-      id = 3;
-      tag = vec { "python"; "panda" };
-      title = "python 工程师";
-      isDeleted = false;
-      ownerId = principal "rbyiv-go2kc-uqegy-mron3-mca6w-u42ww-tz7v7-zz7om-hpbov-ozqax-yqe";
-      description = "牛逼的工作";
-      email = "tingfei.fu@taiditech.com";
-      salaryCeiling = 30_000;
-      company = "SNZ";
-      location = "上海";
-      salaryFloor = 15_000;
-    };
-    record {
-      id = 1;
-      tag = vec { "rust"; "cita" };
-      title = "rust 工程师";
-      isDeleted = false;
-      ownerId = principal "rbyiv-go2kc-uqegy-mron3-mca6w-u42ww-tz7v7-zz7om-hpbov-ozqax-yqe";
-      description = "牛逼的工作";
-      email = "tingfei.fu@taiditech.com";
-      salaryCeiling = 20_000;
-      company = "泰砥科技";
-      location = "上海";
-      salaryFloor = 10_000;
-    };
-  },
-)
-
-dfx canister call djob getAllD
-(
-  vec {
-    record {
-      id = 2;
-      tag = vec { "java"; "spring" };
-      title = "java 工程师";
-      isDeleted = true;
-      ownerId = principal "rbyiv-go2kc-uqegy-mron3-mca6w-u42ww-tz7v7-zz7om-hpbov-ozqax-yqe";
-      description = "牛逼的工作";
-      email = "tingfei.fu@taiditech.com";
-      salaryCeiling = 30_000;
-      company = "SNZ";
-      location = "上海";
-      salaryFloor = 15_000;
-    };
-    record {
-      id = 3;
-      tag = vec { "python"; "panda" };
-      title = "python 工程师";
-      isDeleted = false;
-      ownerId = principal "rbyiv-go2kc-uqegy-mron3-mca6w-u42ww-tz7v7-zz7om-hpbov-ozqax-yqe";
-      description = "牛逼的工作";
-      email = "tingfei.fu@taiditech.com";
-      salaryCeiling = 30_000;
-      company = "SNZ";
-      location = "上海";
-      salaryFloor = 15_000;
-    };
-    record {
-      id = 1;
-      tag = vec { "rust"; "cita" };
-      title = "rust 工程师";
-      isDeleted = false;
-      ownerId = principal "rbyiv-go2kc-uqegy-mron3-mca6w-u42ww-tz7v7-zz7om-hpbov-ozqax-yqe";
-      description = "牛逼的工作";
-      email = "tingfei.fu@taiditech.com";
-      salaryCeiling = 20_000;
-      company = "泰砥科技";
-      location = "上海";
-      salaryFloor = 10_000;
-    };
-  },
-)
-
-dfx canister call djob update '(record {id = 1; ownerId = principal "rbyiv-go2kc-uqegy-mron3-mca6w-u42ww-tz7v7-zz7om-hpbov-ozqax-yqe"; title = "rust 工程师"; company = "太太科技";  location = "上海"; tag = vec{"rust"; "cita"}; description = "牛逼的工作"; salaryFloor = 10000; salaryCeiling = 20000; email = "tingfei.fu@taiditech.com"; isDeleted = false;})'
-()
-
-dfx canister call djob get 1
-(
-  opt record {
-    id = 1;
-    tag = vec { "rust"; "cita" };
-    title = "rust 工程师";
-    isDeleted = false;
-    ownerId = principal "rbyiv-go2kc-uqegy-mron3-mca6w-u42ww-tz7v7-zz7om-hpbov-ozqax-yqe";
-    description = "牛逼的工作";
-    email = "tingfei.fu@taiditech.com";
-    salaryCeiling = 20_000;
-    company = "太太科技";
-    location = "上海";
-    salaryFloor = 10_000;
-  },
-)
-
-
-dfx canister call djob search "rust"
-(
-  vec {
-    record {
-      id = 1;
-      tag = vec { "rust"; "cita" };
-      title = "rust 工程师";
-      isDeleted = false;
-      ownerId = principal "rbyiv-go2kc-uqegy-mron3-mca6w-u42ww-tz7v7-zz7om-hpbov-ozqax-yqe";
-      description = "牛逼的工作";
-      email = "tingfei.fu@taiditech.com";
-      salaryCeiling = 20_000;
-      company = "太太科技";
-      location = "上海";
-      salaryFloor = 10_000;
-    };
-  },
-)
-
+sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
 ```
 
+2. clone 并进入项目
 
-### to-do
+```
+git clone https://github.com/futingfei/djob.git && cd djob
+```
 
-- [ ] backend
-  - [x] CURD
-  - [ ] payment related things with cycles
-- [ ] frontend
-  - [x] basic pages
-  - [ ] CURD from frontend
-  - [ ] access control 
+3. 运行本地环境并安装依赖
+
+```
+dfx start --background
+
+npm install
+```
+
+4. 部署应用
+
+```
+dfx deploy
+```
+
+如果没有报错的话，找到输出结果中如下的字段：
+
+... Installing code for canister djob_assets, with canister_id ryjl3-tyaaa-aaaaa-aaaba-cai ...
+
+然后访问 http://127.0.0.1:8000/?canisterId=ryjl3-tyaaa-aaaaa-aaaba-cai （将 ryjl3-tyaaa-aaaaa-aaaba-cai 替换你对应字符串）。
+
+
+
+### 相关资料
+
+- [开发者文档](https://sdk.dfinity.org/docs/quickstart/quickstart-intro.html)
+- [Motoko 语言教程](https://sdk.dfinity.org/docs/language-guide/motoko.html)
+- 前端相关
+  - [定制前端](https://sdk.dfinity.org/docs/developers-guide/tutorials/custom-frontend.html)
+  - [添加 css](https://sdk.dfinity.org/docs/developers-guide/tutorials/my-contacts.html)
+- 身份相关
+  - [什么是互联网身份（Internet Identity）](https://sdk.dfinity.org/docs/ic-identity-guide/what-is-ic-identity.html)
+  - [Internet Identity](https://identity.ic0.app/)
+  - js 库：[agent](https://www.npmjs.com/package/@dfinity/agent)、 [authentication](https://www.npmjs.com/package/@dfinity/authentication)、[identity](https://www.npmjs.com/package/@dfinity/identity)
+  - 教程：[如何与 Internet Identity 交互](https://kyle-peacock.com/blog/dfinity/integrating-internet-identity/)
+
+

@@ -1,4 +1,9 @@
-import djob from 'ic:canisters/djob';
+import { Actor, HttpAgent } from '@dfinity/agent';
+import { idlFactory as djob_idl, canisterId as djob_id } from 'dfx-generated/djob';
+
+const agent = new HttpAgent();
+const djob = Actor.createActor(djob_idl, { agent, canisterId: djob_id });
+
 import * as React from 'react';
 import Drawer from 'antd/es/drawer';
 import Form from 'antd/es/form';
