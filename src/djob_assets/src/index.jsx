@@ -1,7 +1,11 @@
 import { Actor, HttpAgent } from '@dfinity/agent';
-import { idlFactory as djob_idl, canisterId as djob_id } from 'dfx-generated/djob';
+import { idlFactory as djob_idl } from 'dfx-generated/djob/djob.did.js';
+import canisterIds from '../../../.dfx/local/canister_ids.json'
+
+const djob_id = new URLSearchParams(window.location.search).get("djobId") || canisterIds.djob.local;
 
 const agent = new HttpAgent();
+agent.fetchRootKey();
 const djob = Actor.createActor(djob_idl, { agent, canisterId: djob_id });
 
 import * as React from 'react';
