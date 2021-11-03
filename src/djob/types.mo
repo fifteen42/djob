@@ -1,5 +1,6 @@
+import Principal "mo:base/Principal";
+
 module {
-    public type OwnerId = Text;
     public type Tag = [Text];
 
     public type NewJob = {
@@ -15,7 +16,7 @@ module {
 
     public type Job = {
         id: Nat;
-        ownerId: OwnerId;
+        ownerId: Principal;
         title: Text;
         company: Text;
         location: Text;
@@ -26,4 +27,5 @@ module {
         email: Text;
         isDeleted: Bool;
     };
+    
 };
